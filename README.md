@@ -1,2 +1,4 @@
 # CsCartKiyoh
-Kiyoh reviews for CsCart
+Kiyoh reviews for CsCart.
+
+See: Kiyoh.nl

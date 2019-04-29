@@ -1,0 +1,18 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: addon\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: de_DE\n"
+"PO-Revision-Date: 2019-04-29 21:00+0200\n"
+
+msgctxt "Addons::name::soneritics_kiyoh"
+msgid "Soneritics Kiyoh Reviews"
+msgstr "Soneritics Kiyoh Reviews"
+
+msgctxt "Addons::description::soneritics_kiyoh"
+msgid "Kiyoh reviews"
+msgstr "Kiyoh reviews"
+
+msgctxt "Languages::block_soneritics_kiyoh_reviews"
+msgid "Kiyoh reviews"
+msgstr "Kiyoh reviews"
