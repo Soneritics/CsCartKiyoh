@@ -140,11 +140,14 @@ class KiyohApi
     /**
      * Get the reviews from Kiyoh
      * @param int $page
-     * @return array
+     * @return KiyohReviewResult
+     * @throws Exception
      */
-    public function getReviews(int $page = 1): array
+    public function getReviews(int $page = 1): KiyohReviewResult
     {
-        return (new KiyohHttp)->get($this->getApiUrl() . '&page=' . $page);
+        echo $this->getApiUrl() . '&page=' . $page;
+        $raw = (new KiyohHttp)->get($this->getApiUrl() . '&page=' . $page);
+        return new KiyohReviewResult($page, $this->getReviewCount(), $raw);
     }
 
     /**

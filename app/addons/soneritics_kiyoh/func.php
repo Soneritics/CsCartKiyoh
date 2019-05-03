@@ -6,7 +6,7 @@ if (!defined('BOOTSTRAP')) { die('Access denied'); }
  * @param int $reviewCount
  * @return KiyohApi
  */
-function fn_soneritics_kiyoh_get_api($reviewCount = 50, $page = null)
+function fn_soneritics_kiyoh_get_api($reviewCount = 50)
 {
     $settings = new SoneriticsKiyohSettings;
     $api = new KiyohApi(
