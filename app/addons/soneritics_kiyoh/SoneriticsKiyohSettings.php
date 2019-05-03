@@ -22,18 +22,40 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-$schema['soneritics_kiyoh_reviews'] = [
-    'templates' => [
-        'addons/soneritics_kiyoh/blocks/kiyoh_reviews.tpl' => [],
-    ],
-    'settings' => [
-        'review_count_per_page' => [
-            'type' => 'input',
-            'default_value' => '25',
-        ],
-    ],
-    'wrappers' => 'blocks/wrappers',
-    'cache' => true
-];
+class SoneriticsKiyohSettings
+{
+    /**
+     * @var string
+     */
+    private $connectorCode;
 
-return $schema;
+    /**
+     * @var int
+     */
+    private $companyId;
+
+    /**
+     * SoneriticsKiyohSettings constructor.
+     */
+    public function __construct()
+    {
+        $this->connectorCode = \Tygh\Registry::get('addons.soneritics_kiyoh.connectorcode');
+        $this->companyId = (int)\Tygh\Registry::get('addons.soneritics_kiyoh.company_id');
+    }
+
+    /**
+     * @return string
+     */
+    public function getConnectorCode(): string
+    {
+        return $this->connectorCode;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCompanyId(): int
+    {
+        return $this->companyId;
+    }
+}

@@ -22,18 +22,45 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-$schema['soneritics_kiyoh_reviews'] = [
-    'templates' => [
-        'addons/soneritics_kiyoh/blocks/kiyoh_reviews.tpl' => [],
-    ],
-    'settings' => [
-        'review_count_per_page' => [
-            'type' => 'input',
-            'default_value' => '25',
-        ],
-    ],
-    'wrappers' => 'blocks/wrappers',
-    'cache' => true
-];
 
-return $schema;
+/**
+ * Class KiyohHttp
+ * Generic Http class, but prefixed for CsCart's sake
+ */
+class KiyohHttp
+{
+    /**
+     * @var ?Throwable
+     */
+    private $lastError = null;
+
+    /**
+     * Get the results of the Kiyoh API
+     * @param string $url
+     * @return array
+     */
+    public function get(string $url): array
+    {
+        $result = [];
+        $this->lastError = null;
+
+        try {
+            $contents = @file_get_contents($url);
+            $result = json_decode(json_encode(simplexml_load_string($contents)), true);
+            return $result;
+        } catch (Throwable $t) {
+            $this->lastError = $t;
+        }
+
+        return $result;
+    }
+
+    /**
+     * Get the last error, if any. Otherwise return null.
+     * @return Throwable|null
+     */
+    public function getLastError(): ?Throwable
+    {
+        return $this->lastError;
+    }
+}
