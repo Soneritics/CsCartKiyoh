@@ -36,16 +36,29 @@ class KiyohHttp
 
     /**
      * Get the results of the Kiyoh API
-     * @param string $url
+     * @param KiyohApiUrl $kiyohApiUrl
      * @return array
      */
-    public function get(string $url): array
+    public function get(KiyohApiUrl $kiyohApiUrl): array
     {
         $result = [];
         $this->lastError = null;
 
         try {
-            $contents = @file_get_contents($url);
+            $ch = curl_init();
+
+            $url = $kiyohApiUrl->getUri() . '?';
+            $params = [];
+            foreach ($kiyohApiUrl->getParams() as $paramId => $paramValue) {
+                $params[] = "{$paramId}=" . urlencode($paramValue);
+            }
+            $url .= implode('&', $params);
+
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            $contents = curl_exec($ch);
+            curl_close($ch);
+
             $result = json_decode(json_encode(simplexml_load_string($contents)), true);
             return $result;
         } catch (Throwable $t) {

@@ -28,7 +28,10 @@
  */
 class KiyohApi
 {
-    private $kiyohApi = "https://www.kiyoh.nl/xml/recent_company_reviews.xml?connectorcode=%s&company_id=%d&reviewcount=%d&showextraquestions=%d";
+    /**
+     * @var string
+     */
+    private $kiyohApi = "https://www.kiyoh.nl/xml/recent_company_reviews.xml";
 
     /**
      * @var string
@@ -145,23 +148,25 @@ class KiyohApi
      */
     public function getReviews(int $page = 1): KiyohReviewResult
     {
-        echo $this->getApiUrl() . '&page=' . $page;
-        $raw = (new KiyohHttp)->get($this->getApiUrl() . '&page=' . $page);
+        $raw = (new KiyohHttp)->get($this->getApiUrl($page));
         return new KiyohReviewResult($page, $this->getReviewCount(), $raw);
     }
 
     /**
      * Get the API url
-     * @return string
+     * @param int $page
+     * @return KiyohApiUrl
      */
-    private function getApiUrl()
+    private function getApiUrl(int $page): KiyohApiUrl
     {
-        return sprintf(
-            $this->kiyohApi,
-            $this->getConnectorCode(),
-            $this->getCompanyId(),
-            $this->getReviewCount(),
-            (int)$this->hasExtraQuestions()
-        );
+        $params = [
+            'connectorcode' => $this->getConnectorCode(),
+            'company_id' => $this->getCompanyId(),
+            'reviewcount' => $this->getReviewCount(),
+            'showextraquestions' => (int)$this->hasExtraQuestions(),
+            'page' => $page
+        ];
+
+        return new KiyohApiUrl($this->kiyohApi, $params);
     }
 }
