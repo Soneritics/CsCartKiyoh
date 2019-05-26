@@ -31,6 +31,11 @@
 class KiyohReview
 {
     /**
+     * @var int
+     */
+    private $reviewId;
+
+    /**
      * @var string
      */
     private $customerName;
@@ -93,27 +98,36 @@ class KiyohReview
      */
     public function __construct(array $data)
     {
-        $this->customerName = $data['customer']['name'];
-        $this->customerPlace = $data['customer']['place'];
+        $this->reviewId = (int)$data['id'];
+        $this->customerName = empty($data['customer']['name']) ? '' : (string)$data['customer']['name'];
+        $this->customerPlace = empty($data['customer']['place']) ? '' : (string)$data['customer']['place'];
         $this->totalScore = (int)$data['total_score'];
         $this->recommendation = strtolower($data['recommendation']) === 'ja';
-        $this->positive = empty($data['positive']) ? '' : $data['positive'];
-        $this->negative = empty($data['negative']) ? '' : $data['negative'];
-        $this->purchase = empty($data['purchase']) ? '' : $data['purchase'];
-        $this->reaction = empty($data['reaction']) ? '' : $data['reaction'];
-        $this->image = empty($data['image']) ? '' : $data['image'];
+        $this->positive = empty($data['positive']) ? '' : (string)$data['positive'];
+        $this->negative = empty($data['negative']) ? '' : (string)$data['negative'];
+        $this->purchase = empty($data['purchase']) ? '' : (string)$data['purchase'];
+        $this->reaction = empty($data['reaction']) ? '' : (string)$data['reaction'];
+        $this->image = empty($data['image']) ? '' : (string)$data['image'];
 
         try {
-            $this->date = new DateTime($data['customer']['date']);
+            $this->date = new DateTime((string)$data['customer']['date']);
         } catch (Exception $e) {
             $this->date = new DateTime();
         }
 
         if (!empty($data['questions']['question'])) {
             foreach ($data['questions']['question'] as $question) {
-                $this->questions[$question['id']] = $question['score'];
+                $this->questions[$question['id']] = (int)$question['score'];
             }
         }
+    }
+
+    /**
+     * @return int
+     */
+    public function getReviewId(): int
+    {
+        return $this->reviewId;
     }
 
     /**

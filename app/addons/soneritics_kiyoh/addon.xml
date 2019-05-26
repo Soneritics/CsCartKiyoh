@@ -21,8 +21,34 @@
                         <type>input</type>
                         <default_value></default_value>
                     </item>
+                    <item id="secretkey">
+                        <name>Secret key</name>
+                        <type>input</type>
+                        <default_value></default_value>
+                    </item>
                 </items>
             </section>
         </sections>
     </settings>
+    <queries>
+        <item>
+            CREATE TABLE IF NOT EXISTS `?:soneritics_kiyoh_reviews`(
+                `id` INT NOT NULL AUTO_INCREMENT,
+                `review_id` INT NOT NULL,
+                `customer_name` VARCHAR(250) NOT NULL,
+                `customer_place` VARCHAR(250) NOT NULL,
+                `total_score` INT NOT NULL,
+                `recommendation` TINYINT(1) NOT NULL,
+                `positive` TEXT NOT NULL DEFAULT '',
+                `negative` TEXT NOT NULL DEFAULT '',
+                `purchase` TEXT NOT NULL DEFAULT '',
+                `reaction` TEXT NOT NULL DEFAULT '',
+                `image` VARCHAR(255) NOT NULL DEFAULT '',
+                `date`  INT NOT NULL,
+                PRIMARY KEY (`id`),
+                INDEX `review_id` (`review_id`)
+            );
+        </item>
+        <item for="uninstall">DROP TABLE IF EXISTS `?:soneritics_kiyoh_reviews`</item>
+    </queries>
 </addon>

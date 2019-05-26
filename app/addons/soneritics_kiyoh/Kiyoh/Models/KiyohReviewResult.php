@@ -97,6 +97,14 @@ class KiyohReviewResult
     }
 
     /**
+     * @return int
+     */
+    public function getPages(): int
+    {
+        return $this->pages;
+    }
+
+    /**
      * @return KiyohCompany
      */
     public function getCompany(): KiyohCompany

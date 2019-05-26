@@ -46,7 +46,7 @@ class KiyohApi
     /**
      * @var int
      */
-    private $reviewCount;
+    private $reviewCount = 1000;
 
     /**
      * @var bool
@@ -57,14 +57,12 @@ class KiyohApi
      * KiyohApi constructor.
      * @param string $connectorCode
      * @param int $companyId
-     * @param int $reviewCount
      * @param bool $extraQuestions
      */
-    public function __construct(string $connectorCode, int $companyId, int $reviewCount, bool $extraQuestions = false)
+    public function __construct(string $connectorCode, int $companyId, bool $extraQuestions = false)
     {
         $this->connectorCode = $connectorCode;
         $this->companyId = $companyId;
-        $this->reviewCount = $reviewCount;
         $this->extraQuestions = $extraQuestions;
     }
 
