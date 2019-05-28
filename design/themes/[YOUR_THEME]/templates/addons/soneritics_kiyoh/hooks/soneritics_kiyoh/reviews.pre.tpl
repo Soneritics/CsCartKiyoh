@@ -2,13 +2,14 @@
 <div id="soneritics_kiyoh_reviews">
     <div class="row-fluid">
         <div class="span13">
-            <h2>{$title}</h2>
+            {if $title}<h1>{$title}</h1>{/if}
+            {if $subtitle}<h2>{$subtitle}</h2>{/if}
             <span class="rating">{$totals.total_score}</span>
-            <a href="" title="" class="total-reviews">{number_format($totals.total_reviews, 0, ',', '.')} reviews</a>
+            <a href="{fn_url('soneritics_kiyoh.show')}" title="KiyOh reviews" class="total-reviews">{number_format($totals.total_reviews, 0, ',', '.')} reviews</a>
         </div>
 
         <div class="span3" class="kiyoh-logo">
-            <a href="{$totals.url}" title="" target="_blank"><img src="{$images_dir}/addons/soneritics_kiyoh/kiyoh-logo.svg" alt="KiyOh logo" title=""></a><br>
+            <a href="{$totals.url}" title="KiyOh reviews" target="_blank"><img src="{$images_dir}/addons/soneritics_kiyoh/kiyoh-logo.svg" alt="KiyOh logo" title=""></a><br>
         </div>
     </div>
     <hr class="divider">
@@ -18,7 +19,7 @@
            <div class="span4">
                {assign var="stars" value=$review.total_score}
                <div class="stars">{hook name="soneritics_kiyoh:stars"}{/hook}</div>
-               <div class="placed-by">Door <strong>{$review.customer_name}</strong></div>
+               {if $review.customer_name}<div class="placed-by">Door <strong>{$review.customer_name}</strong></div>{/if}
                <div class="placed-at">Geplaatst op {date('j-n-Y', $review['date'])}</div>
            </div>
 
@@ -37,5 +38,5 @@
 </div>
 
 {if $pages > 1}
-    Pagination
+    <p>Pagination: {$page} / {$pages}</p>
 {/if}
