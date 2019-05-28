@@ -32,6 +32,15 @@
     </settings>
     <queries>
         <item>
+            CREATE TABLE IF NOT EXISTS `?:soneritics_kiyoh_totals`(
+                `id` INT NOT NULL AUTO_INCREMENT,
+                `url` VARCHAR(255) NOT NULL,
+                `total_score` DECIMAL(2,1) NOT NULL,
+                `total_reviews` INT NOT NULL,
+                PRIMARY KEY (`id`)
+            );
+        </item>
+        <item>
             CREATE TABLE IF NOT EXISTS `?:soneritics_kiyoh_reviews`(
                 `id` INT NOT NULL AUTO_INCREMENT,
                 `review_id` INT NOT NULL,
@@ -49,6 +58,7 @@
                 INDEX `review_id` (`review_id`)
             );
         </item>
+        <item for="uninstall">DROP TABLE IF EXISTS `?:soneritics_kiyoh_totals`</item>
         <item for="uninstall">DROP TABLE IF EXISTS `?:soneritics_kiyoh_reviews`</item>
     </queries>
 </addon>

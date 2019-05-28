@@ -1,13 +1,14 @@
+{assign var="totals" value=fn_soneritics_kiyoh_get_totals()}
 <div id="soneritics_kiyoh_reviews">
     <div class="row-fluid">
         <div class="span13">
             <h2>{$title}</h2>
-            <span class="rating">9.5</span>
-            <a href="" title="" class="total-reviews">1.214 reviews</a>
+            <span class="rating">{$totals.total_score}</span>
+            <a href="" title="" class="total-reviews">{number_format($totals.total_reviews, 0, ',', '.')} reviews</a>
         </div>
 
         <div class="span3" class="kiyoh-logo">
-            <a href="" title="" target="_blank"><img src="{$images_dir}/addons/soneritics_kiyoh/kiyoh-logo.svg" alt="KiyOh logo" title=""></a><br>
+            <a href="{$totals.url}" title="" target="_blank"><img src="{$images_dir}/addons/soneritics_kiyoh/kiyoh-logo.svg" alt="KiyOh logo" title=""></a><br>
         </div>
     </div>
     <hr class="divider">

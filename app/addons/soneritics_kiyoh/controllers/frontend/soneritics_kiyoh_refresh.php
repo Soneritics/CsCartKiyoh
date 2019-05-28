@@ -61,6 +61,15 @@ if ($mode === 'action' && !empty($_GET['secret'])) {
                 }
             }
         }
+
+        // Update the totals
+        db_query("TRUNCATE `?:soneritics_kiyoh_totals`");
+        db_query(
+            "INSERT INTO `?:soneritics_kiyoh_totals`(url, total_score, total_reviews) VALUES(?s, ?d, ?i)",
+            $results->getCompany()->getUrl(),
+            round($results->getCompany()->getTotalScore(), 1),
+            $results->getCompany()->getTotalReviews()
+        );
     }
 
     fn_clear_ob();

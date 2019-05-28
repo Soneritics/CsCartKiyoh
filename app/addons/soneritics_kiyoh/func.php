@@ -32,3 +32,12 @@ function fn_soneritics_kiyoh_get_reviews(int $page, int $reviewCountPerPage = 25
         $reviewCountPerPage
     );
 }
+
+/**
+ * Get the totals
+ * @return array
+ */
+function fn_soneritics_kiyoh_get_totals(): array
+{
+    return db_get_row("SELECT * FROM `?:soneritics_kiyoh_totals`");
+}
