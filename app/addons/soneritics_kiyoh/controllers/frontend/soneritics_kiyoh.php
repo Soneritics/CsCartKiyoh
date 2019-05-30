@@ -8,6 +8,7 @@ if ($mode === 'show') {
     $reviewCountPerPage = 25;
     $pages = ceil($totals['total_reviews'] / $reviewCountPerPage);
 
+    Tygh::$app['view']->assign('page_title', 'KiyOh reviews');
     Tygh::$app['view']->assign('title', 'Reviews');
     Tygh::$app['view']->assign('page', $page);
     Tygh::$app['view']->assign('pages', $pages);
