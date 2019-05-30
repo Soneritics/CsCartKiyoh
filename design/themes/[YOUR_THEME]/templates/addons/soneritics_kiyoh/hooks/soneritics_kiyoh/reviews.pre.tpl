@@ -1,4 +1,6 @@
 {assign var="totals" value=fn_soneritics_kiyoh_get_totals()}
+{include file="common/pagination.tpl" id="soneritics_kiyoh_reviews" search=$paginationVars}
+
 <div id="soneritics_kiyoh_reviews">
     <div class="row-fluid">
         <div class="span13">
@@ -37,6 +39,4 @@
     {/foreach}
 </div>
 
-{if $pages > 1}
-    <p>Pagination: {$page} / {$pages}</p>
-{/if}
+{include file="common/pagination.tpl" id="soneritics_kiyoh_reviews" search=$paginationVars}

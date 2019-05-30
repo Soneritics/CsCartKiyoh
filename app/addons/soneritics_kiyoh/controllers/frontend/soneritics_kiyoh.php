@@ -12,4 +12,11 @@ if ($mode === 'show') {
     Tygh::$app['view']->assign('page', $page);
     Tygh::$app['view']->assign('pages', $pages);
     Tygh::$app['view']->assign('review_count_per_page', $reviewCountPerPage);
+
+    $pagination = [
+        'total_items' => $totals['total_reviews'],
+        'items_per_page' => $reviewCountPerPage,
+        'page' => $page
+    ];
+    Tygh::$app['view']->assign('paginationVars', $pagination);
 }
