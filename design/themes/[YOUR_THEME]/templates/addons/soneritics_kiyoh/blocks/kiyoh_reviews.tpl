@@ -5,4 +5,4 @@
 {assign var="subtitle" value="Reviews"}
 {hook name="soneritics_kiyoh:reviews"}{/hook}
 
-<p><a href="{fn_url('soneritics_kiyoh.show')}" class="ty-btn ty-btn__primary">Meer reviews &raquo;</a></p>
+<p><a href="/kiyoh-reviews/" class="ty-btn ty-btn__primary">Meer reviews &raquo;</a></p>

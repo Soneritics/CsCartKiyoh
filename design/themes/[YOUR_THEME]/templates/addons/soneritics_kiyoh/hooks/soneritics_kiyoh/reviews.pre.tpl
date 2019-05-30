@@ -7,7 +7,7 @@
             {if $title}<h1>{$title}</h1>{/if}
             {if $subtitle}<h2>{$subtitle}</h2>{/if}
             <span class="rating">{$totals.total_score}</span>
-            <a href="{fn_url('soneritics_kiyoh.show')}" title="KiyOh reviews" class="total-reviews">{number_format($totals.total_reviews, 0, ',', '.')} reviews</a>
+            <a href="/kiyoh-reviews/" title="KiyOh reviews" class="total-reviews">{number_format($totals.total_reviews, 0, ',', '.')} reviews</a>
         </div>
 
         <div class="span3" class="kiyoh-logo">
