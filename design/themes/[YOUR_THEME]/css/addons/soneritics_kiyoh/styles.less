@@ -5,11 +5,15 @@
   }
 
   .kiyoh-logo {
+    padding-top: 30px;
+
     a {
       display: block;
+      text-align: center;
 
       img {
         width: 100%;
+        max-width: 150px;
       }
     }
   }
@@ -58,4 +62,25 @@
   .total-reviews {
     color: silver;
   }
+}
+
+@media (max-width: 767px) {
+  #soneritics_kiyoh_reviews {
+    >.row-fluid:first-child {
+      >.span14 {
+        width: 70%;
+        display: inline-block;
+      }
+
+      >.span2 {
+        width: 29%;
+        display: inline-block;
+        float: right;
+      }
+    }
+  }
+}
+
+.review-snippet {
+  display: none;
 }

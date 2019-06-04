@@ -1,4 +1,7 @@
 <?php
+
+use Tygh\Registry;
+
 if (!defined('BOOTSTRAP')) { die('Access denied'); }
 
 /**
@@ -39,5 +42,17 @@ function fn_soneritics_kiyoh_get_reviews(int $page, int $reviewCountPerPage = 25
  */
 function fn_soneritics_kiyoh_get_totals(): array
 {
-    return db_get_row("SELECT * FROM `?:soneritics_kiyoh_totals`");
+    $companyId = Registry::get('runtime.company_id');
+    $companyData = fn_get_company_data($companyId);
+
+    $totals = db_get_row("SELECT * FROM `?:soneritics_kiyoh_totals`");
+    $totals['logo'] = fn_get_logos()['theme']['image']['image_path'];
+    $totals['company_name'] = $companyData['company'];
+    $totals['company_phone'] = $companyData['phone'];
+    $totals['company_address'] = implode(
+        ', ',
+        [$companyData['address'], $companyData['zipcode'], $companyData['city']]
+    );
+
+    return $totals;
 }

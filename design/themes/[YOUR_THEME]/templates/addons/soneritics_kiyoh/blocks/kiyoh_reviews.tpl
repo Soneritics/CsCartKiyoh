@@ -1,4 +1,4 @@
-{assign var="review_count_per_page" value="10"}
+{assign var="review_count_per_page" value="3"}
 {assign var="page" value="1"}
 {assign var="pages" value="1"}
 {assign var="title" value=""}
