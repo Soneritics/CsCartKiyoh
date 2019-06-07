@@ -1,6 +1,7 @@
 <?php
 
 use Tygh\Registry;
+use Tygh\Settings;
 
 if (!defined('BOOTSTRAP')) { die('Access denied'); }
 
@@ -56,3 +57,31 @@ function fn_soneritics_kiyoh_get_totals(): array
 
     return $totals;
 }
+
+# Todo: Might want to improve by using the function below
+# @see https://forum.cs-cart.com/topic/55238-fn-get-company-data-gives-the-wrong-information/#entry316076
+/**
+ * Get the company data
+ * @param int $companyId
+ * @return array
+ */
+/*
+function getCompanyData(int $companyId): array
+{
+    $section = Settings::instance()->getSectionByName('Company');
+    $settingsData = Settings::instance()->getList(
+        $section['section_id'],
+        0,
+        false,
+        $companyId,
+        CART_LANGUAGE
+    );
+
+    $result = [];
+    foreach ($settingsData['main'] as $setting) {
+        $result[$setting['name']] = $setting['value'];
+    }
+
+    return $result;
+}
+*/
