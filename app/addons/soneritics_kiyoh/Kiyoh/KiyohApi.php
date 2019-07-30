@@ -31,74 +31,42 @@ class KiyohApi
     /**
      * @var string
      */
-    private $kiyohApi = "https://www.kiyoh.nl/xml/recent_company_reviews.xml";
+    private $kiyohApi = "https://www.kiyoh.com/v1/review/feed.xml";
 
     /**
      * @var string
      */
-    private $connectorCode;
+    private $hash;
 
     /**
      * @var int
      */
-    private $companyId;
-
-    /**
-     * @var int
-     */
-    private $reviewCount = 1000;
-
-    /**
-     * @var bool
-     */
-    private $extraQuestions = false;
+    private $reviewCount = 10000;
 
     /**
      * KiyohApi constructor.
-     * @param string $connectorCode
-     * @param int $companyId
-     * @param bool $extraQuestions
+     * @param string $hash
      */
-    public function __construct(string $connectorCode, int $companyId, bool $extraQuestions = false)
+    public function __construct(string $hash)
     {
-        $this->connectorCode = $connectorCode;
-        $this->companyId = $companyId;
-        $this->extraQuestions = $extraQuestions;
+        $this->hash = $hash;
     }
 
     /**
      * @return string
      */
-    public function getConnectorCode(): string
+    public function getHash(): string
     {
-        return $this->connectorCode;
+        return $this->hash;
     }
 
     /**
-     * @param string $connectorCode
+     * @param string $hash
      * @return KiyohApi
      */
-    public function setConnectorCode(string $connectorCode): KiyohApi
+    public function setHash(string $hash): KiyohApi
     {
-        $this->connectorCode = $connectorCode;
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getCompanyId(): int
-    {
-        return $this->companyId;
-    }
-
-    /**
-     * @param int $companyId
-     * @return KiyohApi
-     */
-    public function setCompanyId(int $companyId): KiyohApi
-    {
-        $this->companyId = $companyId;
+        $this->hash = $hash;
         return $this;
     }
 
@@ -121,48 +89,25 @@ class KiyohApi
     }
 
     /**
-     * @return bool
-     */
-    public function hasExtraQuestions(): bool
-    {
-        return $this->extraQuestions;
-    }
-
-    /**
-     * @param bool $extraQuestions
-     * @return KiyohApi
-     */
-    public function setExtraQuestions(bool $extraQuestions): KiyohApi
-    {
-        $this->extraQuestions = $extraQuestions;
-        return $this;
-    }
-
-    /**
      * Get the reviews from Kiyoh
-     * @param int $page
      * @return KiyohReviewResult
      * @throws Exception
      */
-    public function getReviews(int $page = 1): KiyohReviewResult
+    public function getReviews(): KiyohReviewResult
     {
-        $raw = (new KiyohHttp)->get($this->getApiUrl($page));
-        return new KiyohReviewResult($page, $this->getReviewCount(), $raw);
+        $raw = (new KiyohHttp)->get($this->getApiUrl());
+        return new KiyohReviewResult($raw);
     }
 
     /**
      * Get the API url
-     * @param int $page
      * @return KiyohApiUrl
      */
-    private function getApiUrl(int $page): KiyohApiUrl
+    private function getApiUrl(): KiyohApiUrl
     {
         $params = [
-            'connectorcode' => $this->getConnectorCode(),
-            'company_id' => $this->getCompanyId(),
-            'reviewcount' => $this->getReviewCount(),
-            'showextraquestions' => (int)$this->hasExtraQuestions(),
-            'page' => $page
+            'hash' => $this->getHash(),
+            'limit' => $this->getReviewCount()
         ];
 
         return new KiyohApiUrl($this->kiyohApi, $params);

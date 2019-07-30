@@ -12,10 +12,7 @@ if (!defined('BOOTSTRAP')) { die('Access denied'); }
 function fn_soneritics_kiyoh_get_api(): KiyohApi
 {
     $settings = new SoneriticsKiyohSettings;
-    $api = new KiyohApi(
-        $settings->getConnectorCode(),
-        $settings->getCompanyId()
-    );
+    $api = new KiyohApi($settings->getHash());
 
     return $api;
 }

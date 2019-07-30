@@ -31,44 +31,37 @@ if ($mode === 'action' && !empty($_GET['secret'])) {
         $api = fn_soneritics_kiyoh_get_api();
 
         $results = $api->getReviews();
-        $pages = $results->getPages();
-        for ($page = 1; $page <= $pages; $page++) {
-            if ($page > 1) {
-                $results = $api->getReviews($page);
-            }
-
-            if (!empty($results->getReviews())) {
-                foreach ($results->getReviews() as $review) {
-                    /** @var KiyohReview $review */
-                    if (!in_array($review->getReviewId(), $existingIds)) {
-                        db_query(
-                            "INSERT INTO `?:soneritics_kiyoh_reviews`
-                                (`review_id`, `customer_name`, `customer_place`, `total_score`, `recommendation`, `positive`, `negative`, `purchase`, `reaction`, `image`, `date`)
-                            VALUES(?i, ?s, ?s, ?i, ?i, ?s, ?s, ?s, ?s, ?s, ?i)",
-                            $review->getReviewId(),
-                            $review->getCustomerName(),
-                            $review->getCustomerPlace(),
-                            $review->getTotalScore(),
-                            $review->isRecommendation() ? 1 : 0,
-                            $review->getPositive(),
-                            $review->getNegative(),
-                            $review->getPurchase(),
-                            $review->getReaction(),
-                            $review->getImage(),
-                            $review->getDate()->format('U')
-                        );
-                    }
+        if (!empty($results->getReviews())) {
+            foreach ($results->getReviews() as $review) {
+                /** @var KiyohReview $review */
+                if (!in_array($review->getReviewId(), $existingIds)) {
+                    db_query(
+                        "INSERT INTO `?:soneritics_kiyoh_reviews`
+                            (`review_id`, `customer_name`, `customer_place`, `total_score`, `recommendation`, `oneliner`, `opinion`, `date`)
+                        VALUES(?s, ?s, ?s, ?i, ?i, ?s, ?s, ?s)",
+                        $review->getReviewId(),
+                        $review->getReviewAuthor(),
+                        $review->getCity(),
+                        $review->getRating(),
+                        $review->isRecommend() ? 1 : 0,
+                        $review->getOneLiner(),
+                        $review->getOpinion(),
+                        $review->getDate()->format('U')
+                    );
                 }
             }
         }
+
+        // Get settings for the plugin
+        $settings = new SoneriticsKiyohSettings;
 
         // Update the totals
         db_query("TRUNCATE `?:soneritics_kiyoh_totals`");
         db_query(
             "INSERT INTO `?:soneritics_kiyoh_totals`(url, total_score, total_reviews) VALUES(?s, ?d, ?i)",
-            $results->getCompany()->getUrl(),
-            round($results->getCompany()->getTotalScore(), 1),
-            $results->getCompany()->getTotalReviews()
+            $settings->getCompanyUrl(),
+            round($results->getCompany()->getAverageRating(), 1),
+            $results->getCompany()->getNumberReviews()
         );
     }
 

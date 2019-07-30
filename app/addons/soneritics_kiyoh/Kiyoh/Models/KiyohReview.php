@@ -31,19 +31,19 @@
 class KiyohReview
 {
     /**
-     * @var int
+     * @var bool
      */
-    private $reviewId;
+    private $recommend = true;
 
     /**
      * @var string
      */
-    private $customerName;
+    private $opinion = '';
 
     /**
      * @var string
      */
-    private $customerPlace;
+    private $oneLiner = '';
 
     /**
      * @var DateTime
@@ -53,42 +53,22 @@ class KiyohReview
     /**
      * @var int
      */
-    private $totalScore;
-
-    /**
-     * @var bool
-     */
-    private $recommendation;
+    private $rating;
 
     /**
      * @var string
      */
-    private $positive;
+    private $city = '';
 
     /**
      * @var string
      */
-    private $negative;
+    private $reviewAuthor = '';
 
     /**
      * @var string
      */
-    private $purchase;
-
-    /**
-     * @var string
-     */
-    private $reaction;
-
-    /**
-     * @var string
-     */
-    private $image;
-
-    /**
-     * @var array
-     */
-    private $questions = [];
+    private $reviewId;
 
     /**
      * KiyohReview constructor.
@@ -98,52 +78,60 @@ class KiyohReview
      */
     public function __construct(array $data)
     {
-        $this->reviewId = (int)$data['id'];
-        $this->customerName = empty($data['customer']['name']) ? '' : (string)$data['customer']['name'];
-        $this->customerPlace = empty($data['customer']['place']) ? '' : (string)$data['customer']['place'];
-        $this->totalScore = (int)$data['total_score'];
-        $this->recommendation = strtolower($data['recommendation']) === 'ja';
-        $this->positive = empty($data['positive']) ? '' : (string)$data['positive'];
-        $this->negative = empty($data['negative']) ? '' : (string)$data['negative'];
-        $this->purchase = empty($data['purchase']) ? '' : (string)$data['purchase'];
-        $this->reaction = empty($data['reaction']) ? '' : (string)$data['reaction'];
-        $this->image = empty($data['image']) ? '' : (string)$data['image'];
+        $this->reviewId = (string)$data['reviewId'];
+        $this->reviewAuthor = empty($data['reviewAuthor']) ? '' : (string)$data['reviewAuthor'];
+        $this->city = empty($data['city']) ? '' : (string)$data['city'];
+        $this->rating = (int)$data['rating'];
 
         try {
-            $this->date = new DateTime((string)$data['customer']['date']);
+            $this->date = new DateTime((string)$data['dateSince']);
         } catch (Exception $e) {
             $this->date = new DateTime();
         }
 
-        if (!empty($data['questions']['question'])) {
-            foreach ($data['questions']['question'] as $question) {
-                $this->questions[$question['id']] = (int)$question['score'];
+        if (!empty($data['reviewContent']['reviewContent'])) {
+            foreach ($data['reviewContent']['reviewContent'] as $question) {
+                if (!empty($question['questionGroup']) && !empty($question['rating'])) {
+                    switch ($question['questionGroup']) {
+                        case 'DEFAULT_ONELINER':
+                            $this->oneLiner = (string)$question['rating'];
+                            break;
+
+                        case 'DEFAULT_OPINION':
+                            $this->opinion = (string)$question['rating'];
+                            break;
+
+                        case 'DEFAULT_RECOMMEND':
+                            $this->recommend = strtolower($question['rating']) === 'true';
+                            break;
+                    }
+                }
             }
         }
     }
 
     /**
-     * @return int
+     * @return bool
      */
-    public function getReviewId(): int
+    public function isRecommend(): bool
     {
-        return $this->reviewId;
+        return $this->recommend;
     }
 
     /**
      * @return string
      */
-    public function getCustomerName(): string
+    public function getOpinion(): string
     {
-        return $this->customerName;
+        return $this->opinion;
     }
 
     /**
      * @return string
      */
-    public function getCustomerPlace(): string
+    public function getOneLiner(): string
     {
-        return $this->customerPlace;
+        return $this->oneLiner;
     }
 
     /**
@@ -157,64 +145,32 @@ class KiyohReview
     /**
      * @return int
      */
-    public function getTotalScore(): int
+    public function getRating(): int
     {
-        return $this->totalScore;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isRecommendation(): bool
-    {
-        return $this->recommendation;
+        return $this->rating;
     }
 
     /**
      * @return string
      */
-    public function getPositive(): string
+    public function getCity(): string
     {
-        return $this->positive;
+        return $this->city;
     }
 
     /**
      * @return string
      */
-    public function getNegative(): string
+    public function getReviewAuthor(): string
     {
-        return $this->negative;
+        return $this->reviewAuthor;
     }
 
     /**
      * @return string
      */
-    public function getPurchase(): string
+    public function getReviewId(): string
     {
-        return $this->purchase;
-    }
-
-    /**
-     * @return string
-     */
-    public function getReaction(): string
-    {
-        return $this->reaction;
-    }
-
-    /**
-     * @return string
-     */
-    public function getImage(): string
-    {
-        return $this->image;
-    }
-
-    /**
-     * @return array
-     */
-    public function getQuestions(): array
-    {
-        return $this->questions;
+        return $this->reviewId;
     }
 }

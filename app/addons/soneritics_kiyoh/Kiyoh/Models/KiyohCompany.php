@@ -31,39 +31,29 @@
 class KiyohCompany
 {
     /**
-     * @var string
+     * @var float
      */
-    private $name;
-
-    /**
-     * @var string
-     */
-    private $url;
-
-    /**
-     * @var string
-     */
-    private $category;
-
-    /**
-     * @var double
-     */
-    private $totalScore;
+    private $averageRating;
 
     /**
      * @var int
      */
-    private $totalReviews;
+    private $numberReviews;
 
     /**
-     * @var int
+     * @var float
      */
-    private $totalViews;
+    private $percentageRecommendation;
 
     /**
-     * @var array
+     * @var string
      */
-    private $averageScores = [];
+    private $locationName;
+
+    /**
+     * @var string
+     */
+    private $locationId;
 
     /**
      * KiyohCompany constructor. Parses the array to objects.
@@ -71,73 +61,50 @@ class KiyohCompany
      */
     public function __construct(array $data)
     {
-        $this->name = $data['name'];
-        $this->url = $data['url'];
-        $this->category = $data['category']['title'];
-        $this->totalScore = (double)$data['total_score'];
-        $this->totalReviews = (int)$data['total_reviews'];
-        $this->totalViews = (int)$data['total_views'];
-
-        if (!empty($data['average_scores']['questions']['question'])) {
-            foreach ($data['average_scores']['questions']['question'] as $question) {
-                $this->averageScores[$question['id']] = $question['score'];
-            }
-        }
-    }
-
-    /**
-     * @return string
-     */
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-    /**
-     * @return string
-     */
-    public function getUrl(): string
-    {
-        return $this->url;
-    }
-
-    /**
-     * @return string
-     */
-    public function getCategory(): string
-    {
-        return $this->category;
+        $this->averageRating = (double)$data['averageRating'];
+        $this->numberReviews = (int)$data['numberReviews'];
+        $this->percentageRecommendation = (double)$data['percentageRecommendation'];
+        $this->locationName = $data['locationName'];
+        $this->locationId = $data['locationId'];
     }
 
     /**
      * @return float
      */
-    public function getTotalScore(): float
+    public function getAverageRating(): float
     {
-        return $this->totalScore;
+        return $this->averageRating;
     }
 
     /**
      * @return int
      */
-    public function getTotalReviews(): int
+    public function getNumberReviews(): int
     {
-        return $this->totalReviews;
+        return $this->numberReviews;
     }
 
     /**
-     * @return int
+     * @return float
      */
-    public function getTotalViews(): int
+    public function getPercentageRecommendation(): float
     {
-        return $this->totalViews;
+        return $this->percentageRecommendation;
     }
 
     /**
-     * @return array
+     * @return string
      */
-    public function getAverageScores(): array
+    public function getLocationName(): string
     {
-        return $this->averageScores;
+        return $this->locationName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLocationId(): string
+    {
+        return $this->locationId;
     }
 }

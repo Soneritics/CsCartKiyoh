@@ -61,7 +61,7 @@
                         <span itemprop="name">{$review.customer_name}</span>
                     </span>
 
-                    <span itemprop="reviewBody">{$review.positive}</span>
+                    <span itemprop="reviewBody">{$review.opinion}</span>
 
                     <span itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
                         <meta itemprop="name" content="{$totals.company_name}">
@@ -69,14 +69,9 @@
                 </div>
            </div>
 
-           <div class="span7">
-               {if $review.positive != ""}<i class="fa fa-plus-circle"></i>{/if}
-               {$review.positive}
-           </div>
-
-           <div class="span5">
-               {if $review.negative != ""}<i class="fa fa-minus-circle"></i>{/if}
-               {$review.negative}
+           <div class="span12">
+               {if $review.oneliner != ""}<p><strong>{$review.oneliner}</strong></p>{/if}
+               {$review.opinion}
            </div>
         </div>
         <hr>

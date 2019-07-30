@@ -27,35 +27,35 @@ class SoneriticsKiyohSettings
     /**
      * @var string
      */
-    private $connectorCode;
+    private $hash;
 
     /**
-     * @var int
+     * @var string
      */
-    private $companyId;
+    private $companyUrl;
 
     /**
      * SoneriticsKiyohSettings constructor.
      */
     public function __construct()
     {
-        $this->connectorCode = \Tygh\Registry::get('addons.soneritics_kiyoh.connectorcode');
-        $this->companyId = (int)\Tygh\Registry::get('addons.soneritics_kiyoh.company_id');
+        $this->hash = \Tygh\Registry::get('addons.soneritics_kiyoh.hash');
+        $this->companyUrl = \Tygh\Registry::get('addons.soneritics_kiyoh.url');
     }
 
     /**
      * @return string
      */
-    public function getConnectorCode(): string
+    public function getHash(): string
     {
-        return $this->connectorCode;
+        return $this->hash;
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getCompanyId(): int
+    public function getCompanyUrl(): string
     {
-        return $this->companyId;
+        return $this->companyUrl;
     }
 }

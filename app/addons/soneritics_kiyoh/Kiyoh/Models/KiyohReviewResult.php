@@ -31,19 +31,9 @@
 class KiyohReviewResult
 {
     /**
-     * @var int
+     * @var array
      */
-    private $page;
-
-    /**
-     * @var int
-     */
-    private $pages;
-
-    /**
-     * @var int
-     */
-    private $reviewsPerPage;
+    private $reviews = [];
 
     /**
      * @var KiyohCompany
@@ -51,57 +41,19 @@ class KiyohReviewResult
     private $company;
 
     /**
-     * @var array
-     */
-    private $questions = [];
-
-    /**
-     * @var array
-     */
-    private $reviews = [];
-
-    /**
      * KiyohReviewResult constructor. Also parses the array values to objects.
-     * @param int $page
-     * @param int $reviewsPerPage
      * @param array $data
      * @throws Exception
      */
-    public function __construct(int $page, int $reviewsPerPage, array $data)
+    public function __construct(array $data)
     {
-        $this->page = $page;
-        $this->reviewsPerPage = $reviewsPerPage;
-        $this->company = new KiyohCompany($data['company']);
+        $this->company = new KiyohCompany($data);
 
-        $this->pages = ceil($this->getCompany()->getTotalReviews() / $reviewsPerPage);
-
-        if (!empty($data['company']['average_scores']['questions']['question'])) {
-            foreach ($data['company']['average_scores']['questions']['question'] as $question) {
-                $this->questions[$question['id']] = $question['title'];
+        if (!empty($data['reviews']['reviews'])) {
+            foreach ($data['reviews']['reviews'] as $review) {
+                $this->reviews[$review['reviewId']] = new KiyohReview($review);
             }
         }
-
-        if (!empty($data['review_list']['review'])) {
-            foreach ($data['review_list']['review'] as $review) {
-                $this->reviews[$review['id']] = new KiyohReview($review);
-            }
-        }
-    }
-
-    /**
-     * @return int
-     */
-    public function getPage(): int
-    {
-        return $this->page;
-    }
-
-    /**
-     * @return int
-     */
-    public function getPages(): int
-    {
-        return $this->pages;
     }
 
     /**
@@ -110,14 +62,6 @@ class KiyohReviewResult
     public function getCompany(): KiyohCompany
     {
         return $this->company;
-    }
-
-    /**
-     * @return array
-     */
-    public function getQuestions(): array
-    {
-        return $this->questions;
     }
 
     /**

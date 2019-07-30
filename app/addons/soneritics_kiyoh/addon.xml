@@ -2,7 +2,7 @@
 <addon scheme="3.0">
     <id>soneritics_kiyoh</id>
     <name>Soneritics Kiyoh Reviews</name>
-    <version>1.0</version>
+    <version>2.0</version>
     <default_language>en</default_language>
     <priority>1000</priority>
     <status>active</status>
@@ -11,18 +11,18 @@
         <sections>
             <section id="general">
                 <items>
-                    <item id="connectorcode">
-                        <name>connectorcode</name>
-                        <type>input</type>
-                        <default_value></default_value>
-                    </item>
-                    <item id="company_id">
-                        <name>company_id</name>
-                        <type>input</type>
-                        <default_value></default_value>
-                    </item>
                     <item id="secretkey">
-                        <name>Secret key</name>
+                        <name>secretkey</name>
+                        <type>input</type>
+                        <default_value></default_value>
+                    </item>
+                    <item id="hash">
+                        <name>hash</name>
+                        <type>input</type>
+                        <default_value></default_value>
+                    </item>
+                    <item id="url">
+                        <name>KiyOh URL</name>
                         <type>input</type>
                         <default_value></default_value>
                     </item>
@@ -43,16 +43,13 @@
         <item>
             CREATE TABLE IF NOT EXISTS `?:soneritics_kiyoh_reviews`(
                 `id` INT NOT NULL AUTO_INCREMENT,
-                `review_id` INT NOT NULL,
+                `review_id` VARCHAR(50) NOT NULL,
                 `customer_name` VARCHAR(250) NOT NULL,
                 `customer_place` VARCHAR(250) NOT NULL,
                 `total_score` INT NOT NULL,
                 `recommendation` TINYINT(1) NOT NULL,
-                `positive` TEXT NOT NULL DEFAULT '',
-                `negative` TEXT NOT NULL DEFAULT '',
-                `purchase` TEXT NOT NULL DEFAULT '',
-                `reaction` TEXT NOT NULL DEFAULT '',
-                `image` VARCHAR(255) NOT NULL DEFAULT '',
+                `oneliner` TEXT NOT NULL DEFAULT '',
+                `opinion` TEXT NOT NULL DEFAULT '',
                 `date`  INT NOT NULL,
                 PRIMARY KEY (`id`),
                 INDEX `review_id` (`review_id`)
