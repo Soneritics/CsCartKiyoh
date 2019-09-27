@@ -17,6 +17,7 @@ It will also create pages where all of your reviews are shown, using the same la
 Follow these steps to install and configure the addon:
 1) Download the files from this Git repository and upload them to your Cs Cart installation.
   (Only the files in app, design and var are needed.)
+    * In the [design/themes] folder, you will find a folder names [YOUR_THEME]. Rename this to your template name. 
 2) Next, install the plugin in Cs Cart. (Addons -> Manage -> Browse all Available addons -> Soneritics KiyOh)
 3) When the plugin is installed, you can configure it. See the section below for configuration details.
 4) You can now add a block with the latest reviews to your site.
